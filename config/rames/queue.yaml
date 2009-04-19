@@ -1,0 +1,8 @@
+development:
+    adaptor: file
+
+test:
+    adaptor: imap
+
+production:
+    adaptor: pop3

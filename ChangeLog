@@ -1,0 +1,7 @@
+2009-04-20  Hiroyuki Nakamura <hiroyuki@sfc.keio.ac.jp>
+
+	* Config file DSL definition is completed. see rames.rb
+
+2009-04-18  Hiroyuki Nakamura <hiroyuki@sfc.keio.ac.jp>
+
+	* Start implementation of Rams.
