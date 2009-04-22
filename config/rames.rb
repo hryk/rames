@@ -15,6 +15,8 @@ processor :root do
   #  - Rames::Mailet::PostMasterAlias
   #    builtin (rames/mailet/post_master_alias.rb)
   #    or user-defined (app/matcher/post_master_alias.rb)
+  #
+
   match :all do
     mailet :post_master_alias
     mailet :logging
@@ -37,7 +39,7 @@ processor :root do
   # Mailet Call
   # # Rames::Mailet::Discard.new.service(mail)
   match :relay_limit =>  30 do
-    mailet :discard 
+    mailet :discard
   end
 
   # You can call method instead of 'searvice'
@@ -65,7 +67,7 @@ processor :root do
   end
 
   # Inline Mailet
-  match  :relay_limit => 30 ] do
+  match  :relay_limit => 30  do
     lambda { |mail| puts "#{mail}" }
   end
 
@@ -81,5 +83,6 @@ processor :spam do
   match(  :all ) do
     to_repository 'file:///var/mail/spam'
   end
+
 end
 

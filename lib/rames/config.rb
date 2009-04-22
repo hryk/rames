@@ -1,6 +1,5 @@
 module Rames
   module Config
-
     # from Rails
     # vendor/rails/activesupport/lib/active_support/inflector.rb
     def underscore(camel_cased_word)
@@ -20,6 +19,5 @@ module Rames
       end
     end
     module_function :camelize
-
   end
 end
