@@ -1,17 +1,21 @@
+require 'forwardable'
 module Rames
   module Matcher
     class Base
-      attr_accessor :processor, :container, :mail, :behaviour
+      attr_accessor :processor, :mail, :behaviour
+#      def_delegator :@processor, :to_processor,  :to_processor_run
+#      def_delegator :@processor, :to_repository, :to_repository_run
 
-      def initialize
+      def initialize(args=nil)
       end
 
       def match(mail)
         @mail = mail
       end
 
-      def bake(&block)
+      def bake(processor, &block)
         @behaviour = &block
+        @processor = processor
       end
 
       def behave
@@ -20,16 +24,22 @@ module Rames
 
       private
 
-      def mailet(name)
-        
+      def mailet(def_mailet)
+        if def_mailet.is_a? Symobol
+          load_mailet(name)
+        elsif def_mailet.is_a? Hash
+          m = get_mailet_instance(name)
+        end
       end
 
+      # Forward ...
+      #
       def to_repository(uri)
-        Rames::Config::Repository.instance.repository(uri).put(@mail)
+        return { :to_repository => uri }
       end
 
       def to_processor(name)
-        Rames::Config::Container.instance.processor(name).run @mail
+        return { :to_processor  => name }
       end
 
     end
