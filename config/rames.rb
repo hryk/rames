@@ -18,7 +18,7 @@ processor :root do
   #
 
   match :all do
-    mailet :post_master_alias
+    #mailet :post_master_alias
     mailet :logging
   end
 
@@ -38,9 +38,9 @@ processor :root do
   #    mailet/discard.rb
   # Mailet Call
   # # Rames::Mailet::Discard.new.service(mail)
-  match :relay_limit =>  30 do
-    mailet :discard
-  end
+#  match :relay_limit =>  30 do
+#    mailet :discard
+#  end
 
   # You can call method instead of 'searvice'
   # Matcher class
@@ -53,36 +53,41 @@ processor :root do
   #    mailet/my_mailet.rb
   # Mailet Call
   # # Rames::Mailet::MyMailet.new.to_mobile(mail)
-  match(:address_is => /@hryk\.info/) do
-    mailet :my_mailet => :to_mobile
-  end
+#  match(:address_is => /@hryk\.info/) do
+#    mailet :my_mailet => :to_mobile
+#  end
 
   # Redirect another processor
   # Processor call
   #  Rames::Container#redirect(:spam, mail)
   #  then...
   #  Rames::Processor#run(mail)
-  match :spam_filter do
-    to_processor :spam
-  end
+#  match :spam_filter do
+#    to_processor :spam
+#  end
 
-  # Inline Mailet
-  match  :relay_limit => 30  do
-    lambda { |mail| puts "#{mail}" }
-  end
-
-end
-
-processor :spam do
-  # Return mail to repository
-  # repository call
-  #  mail.return_repository('respository_uri')
-  #  then...
-  #  Rames::Processor#run(mail)
-  #  ??????
-  match(  :all ) do
-    to_repository 'file:///var/mail/spam'
-  end
+#  # Inline Mailet
+#  match  :relay_limit => 30  do
+#    lambda { |mail| puts "#{mail}" }
+#  end
 
 end
+
+processor :discard do
+    match :all do
+        to_repository :trashbox
+    end
+end
+#processor :spam do
+#  # Return mail to repository
+#  # repository call
+#  #  mail.return_repository('respository_uri')
+#  #  then...
+#  #  Rames::Processor#run(mail)
+#  #  ??????
+#  match(  :all ) do
+#    to_repository 'file:///var/mail/spam'
+#  end
+#
+#end
 

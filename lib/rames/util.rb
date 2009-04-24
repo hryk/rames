@@ -1,6 +1,19 @@
 module Rames
   module Util
 
+    def get_mailet(name)
+      get_components('mailet',name)
+    end
+
+    def get_matcher(name)
+      get_components('matcher',name)
+    end
+
+    def get_components(type, name)
+      under_score_name = "rames/#{type}/#{name}"
+      constnize( camelize under_score_name).new
+    end
+
     def load_matcher(name)
       return load_component('matcher', name)
     end
@@ -12,13 +25,13 @@ module Rames
     def load_component(type, name)
       begin
         require "rames/#{type}/#{name}"
-      rescue
+      rescue LoadError => e
         require "#{RAMES_ROOT}/app/#{type}/#{name}"
       ensure
         path = "rames/#{type}/#{name}"
       end
 
-      return to_const path
+      return camelize path
     end
 
     def constnize(string)
