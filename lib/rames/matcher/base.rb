@@ -1,4 +1,5 @@
 require 'forwardable'
+
 module Rames
   module Matcher
     class Base
@@ -21,9 +22,11 @@ module Rames
 
       def behave(mail)
         @mail = mail
+
         point = catch( :exit_behaviour ){
           instance_eval &@behaviour
         }
+
         return_mail = @mail
         @mail = nil
 
@@ -52,7 +55,7 @@ module Rames
       # Forward ...
       #
       def to_repository(uri)
-         throw :exit_behaviour , [:to_repository, name]
+         throw :exit_behaviour , [:to_repository, uri]
       end
 
       def to_processor(name)

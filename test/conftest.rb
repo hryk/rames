@@ -6,6 +6,7 @@ require 'tmail'
 
 # conf = Rames::Config.new(RAMES_ROOT)
 # Rames::SpoolManager.run(conf)
+
 RAMES_ROOT = File.expand_path(File.dirname(__FILE__)) + '/../'
 puts "ROOT: #{RAMES_ROOT}"
 c = Rames::Container.new(ARGV[0])
@@ -16,3 +17,4 @@ mail.body = 'this is test..'
 mail.to = 'hello@hryk.info'
 
 c.process(mail)
+

@@ -14,6 +14,10 @@ module Rames
       }
     end
 
+    def set_root_processor(processor)
+        @root_processor = processor
+    end
+
     private
 
     def read_config(conf_path)
@@ -30,15 +34,11 @@ module Rames
         puts e.backtrace.join("\n")
       end
 
-      raise "Define root processor.Abort." if @root_processor.nil?
+      raise "Define root processor." if @root_processor.nil?
     end
 
-    def processor(name, &block)
-      if name == :root
-        @root_processor = Rames::Processor.new(name, &block)
-      else
-        @processor_tree[name] = Rames::Processor.new(name, &block)
-      end
+    def processor(name_sym , &block)
+        @processor_tree[name_sym] = Rames::Processor.new(name_sym, &block)
     end
 
   end

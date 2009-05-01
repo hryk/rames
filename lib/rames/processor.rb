@@ -2,18 +2,17 @@ require 'forwardable'
 require 'rames/util'
 require 'rames/matcher/base'
 require 'rames/mailet/base'
-require 'yaml'
 
 module Rames
   class Processor
     include Util
     extend Forwardable
     attr_accessor :name, :parent, :is_root, :matchers, :container
-    def_delegators :@container, :root_processor #, :to_processor, :to_repository
+    def_delegators :@container, :set_root_processor #, :to_processor, :to_repository
 
     def initialize(name, &block)
       @is_root  = (name == :root) ? true : false
-#      root_processor self if @is_root
+      set_root_processor self if @is_root
       @matchers = []
       regist_matchers &block
     end
@@ -26,16 +25,14 @@ module Rames
           next
         elsif recipients.size == 1
           res = m.behave mail
+          unless res.nil?
+              mail =  res[:mail]
+              throw :exit_processor, res[:to] unless res[:to].nil?
+          end
         else
 
         end
 
-        unless res.nil?
-           mail =  res[:mail]
-           throw :exit_processor, res[:to] unless res[:to].nil?
-        else
-          next
-        end
       }
     end
 

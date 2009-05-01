@@ -1,5 +1,5 @@
 # Rames configuration sample.
-#
+
 # Root Processor
 processor :root do
 
